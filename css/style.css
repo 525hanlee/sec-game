@@ -93,7 +93,7 @@ input[type="number"]::-webkit-inner-spin-button {
  * main
  *---------------------------------------------------------------------------*/
 .main{
-  width: 750px;
+  width: 850px;
   flex-wrap: wrap;
 }
 .score{
@@ -131,7 +131,7 @@ input[type="number"]::-webkit-inner-spin-button {
   justify-content: flex-end;
 }
 .question{
-  width: 445px;
+  width: 530px;
   height: 131px;
   font-size: 112px;
   text-align: right;
