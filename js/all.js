@@ -1,12 +1,14 @@
 const startDOM = document.querySelector('.start');
 const mainDOM = document.querySelector('.main');
 const restartDOM = document.querySelector('.restart');
+// 遊戲變數
 let countTime = 60;
 let num1 = 0;
 let num2 = 0;
 let operator = '';
 let score = 0;
 let gaming = false;
+// 開始倒數計時
 const startCount = () => {
   const timeDOM = document.querySelector('.time');
   const finalScore = document.querySelector('.finalScore-num');
@@ -27,19 +29,27 @@ const startCount = () => {
     }
   }, 1000);
 };
+// 隨機生成數字，傳入最大值與最小值
 const getRandomInt = (min, max) => {
   const minNum = Math.ceil(min);
   const maxNum = Math.floor(max);
   return Math.floor(Math.random() * (maxNum - minNum + 1)) + min;
 };
+// 隨機生成符號，如果上一個符號是乘除下一個就改成加減
 const getRandomOperator = () => {
-  const int = getRandomInt(1, 4);
+  let int = 0;
+  if (operator === '×' || operator === '÷') {
+    int = getRandomInt(1, 2);
+  } else {
+    int = getRandomInt(1, 4);
+  }
   if (int === 1) return '+';
   if (int === 2) return '-';
   if (int === 3) return '×';
   if (int === 4) return '÷';
   return undefined;
 };
+// 計算正確答案
 const calc = () => {
   if (operator === '+') return num1 + num2;
   if (operator === '-') return num1 - num2;
@@ -47,7 +57,7 @@ const calc = () => {
   if (operator === '÷') return num1 / num2;
   return undefined;
 };
-
+// 顯示題目
 const showNumber = () => {
   document.querySelector('.answer').value = '';
   const question = document.querySelector('.question');
@@ -68,6 +78,7 @@ const showNumber = () => {
   ${num1}<font> ${operator} </font>${num2}<font> = </font>`;
   return undefined;
 };
+// 顯示目前分數
 const showScore = () => {
   const scoreDOM = document.querySelector('.score-num');
   let num = '';
@@ -81,13 +92,12 @@ const showScore = () => {
   scoreDOM.textContent = num;
   return undefined;
 };
+// 檢查答案是否正確後計算分數
 const checkAnswer = () => {
   const answer = Number(document.querySelector('.answer').value);
   let plusNum = 1;
   const answerNum = calc();
   if (countTime < 20) plusNum = 5;
-  console.log(answerNum);
-  console.log(answer);
   if (answerNum === answer) {
     score += plusNum;
   } else if (answerNum !== answer && score > 0) {
@@ -98,6 +108,7 @@ const checkAnswer = () => {
   showScore();
   showNumber();
 };
+// 監聽事件
 document.body.addEventListener('keydown', (e) => {
   if (e.keyCode === 13 && gaming) checkAnswer();
 });
